@@ -41,16 +41,19 @@ public class CreateComputerTests {
         String expectedMsg = "Done ! Computer Computer1 has been created";
         softAssert.assertEquals(actualMsg, expectedMsg, "Wrong message after save");
         listComputerPage.filterByComputerName("Computer12345678");
-        WebElement computerName = driver.findElement(By.xpath("//tr[1]/td[1]/a"));
-        WebElement introduced = driver.findElement(By.xpath("//tr[1]/td[2]"));
-        WebElement discontinued = driver.findElement(By.xpath("//tr[1]/td[3]"));
-        WebElement companyName = driver.findElement(By.xpath("//tr[1]/td[4]"));
-        softAssert.assertEquals(computerName.getText(), "Computer12345678");
-        softAssert.assertEquals(introduced.getText(), "16 Nov 2010");
-        softAssert.assertEquals(discontinued.getText(), "16 Nov 2020");
-        softAssert.assertEquals(companyName.getText(), "Apple Inc.");
+        try {
+            WebElement computerName = driver.findElement(By.xpath("//tr[1]/td[1]/a"));
+            WebElement introduced = driver.findElement(By.xpath("//tr[1]/td[2]"));
+            WebElement discontinued = driver.findElement(By.xpath("//tr[1]/td[3]"));
+            WebElement companyName = driver.findElement(By.xpath("//tr[1]/td[4]"));
+            softAssert.assertEquals(computerName.getText(), "Computer12345678");
+            softAssert.assertEquals(introduced.getText(), "16 Nov 2010");
+            softAssert.assertEquals(discontinued.getText(), "16 Nov 2020");
+            softAssert.assertEquals(companyName.getText(), "Apple Inc.");
+        } catch (Exception e) {
+            softAssert.fail("Computer was not found");
+        }
         softAssert.assertAll();
-
 
     }
 
@@ -72,7 +75,7 @@ public class CreateComputerTests {
     }
 
     @Test
-    public void ValidateRequiredFieldsTest() throws InterruptedException {
+    public void validateRequiredFieldsTest() throws InterruptedException {
         driver.get(ListComputerPage.URL);
         ListComputerPage listComputerPage = new ListComputerPage(driver);
         listComputerPage.clickAddComputer();
